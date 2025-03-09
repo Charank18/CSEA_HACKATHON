@@ -93,7 +93,97 @@ The model can be found at: [https://huggingface.co/Charankarnati18/TASK3](https:
 
 
 ```
+# TASK1 - Text Summarization Model **
+
+This repository contains the full source code, scripts, and dependencies required to fine-tune a **BART (Bidirectional and Auto-Regressive Transformer)** model for text summarization. The model is designed to generate concise summaries from lengthy text inputs.
+
+## Model Overview
+The model uses **BART-base (facebook/bart-base)** architecture from Hugging Face for sequence-to-sequence text summarization. It has been fine-tuned on a custom dataset containing dialogue texts and highlights.
+
+## Dataset
+The dataset consists of two columns:
+- **input (body):** The full text or dialogue.
+- **target (highlight):** The summary of the text.
+
+The dataset file used is `final_labels.csv`.
+
+## Dependencies
+Install the required libraries using:
+
+```shell
+pip install pandas transformers torch datasets rouge nltk
+```
+
+## Preprocessing
+The script automatically preprocesses the text data by:
+- Removing null values.
+- Converting text to lowercase.
+- Tokenizing the text using the BART tokenizer.
+- Mapping text and summary for training.
+
+## Training the Model
+The BART model is fine-tuned using the Hugging Face `Seq2SeqTrainer` API with the following parameters:
+- **Epochs:** 3
+- **Batch size:** 4
+- **Learning rate:** 3e-5
+- **Max input length:** 512
+- **Max output length:** 128
+- **Beam search:** 4 beams
+
+To train the model, run:
+
+```shell
+python task1_final.py
+```
+
+The fine-tuned model will be saved in the `/fine-tuned-model` directory.
+
+## Evaluating the Model
+The evaluation script uses the following metrics:
+- **BLEU Score** (for text accuracy)
+- **ROUGE Score** (for summarization quality)
+- **Perplexity Score** (for model coherence)
+- **Cosine Similarity** (for semantic closeness)
+
+The evaluation results are automatically printed after model training.
+
+## Model Inference
+You can use the trained model for text summarization using the following script:
+
+```python
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
+
+model_path = "./fine-tuned-model"
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+
+text = "Child: Mom, I read that drinking enough water can make you look younger! Is that true?"
+inputs = tokenizer(text, return_tensors="pt", max_length=512, truncation=True)
+summary_ids = model.generate(inputs["input_ids"], num_beams=4, max_length=128)
+summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+print(summary)
+```
+
+## Uploading the Model to Hugging Face
+The trained model is uploaded to Hugging Face using:
+
+```python
+from huggingface_hub import HfApi
+
+api = HfApi()
+api.create_repo(repo_id="Charankarnati18/TASK1", repo_type="model")
+api.upload_folder(
+    folder_path="./fine-tuned-model",
+    repo_id="Charankarnati18/TASK1",
+    repo_type="model",
+    commit_message="Uploading fine-tuned summarization model"
+)
+```
+
+The model can be found at: [https://huggingface.co/spaces/Charankarnati18/summarize_](https://huggingface.co/Charankarnati18/TASK1)
 
 ## Contact
 For any issues, contact: [charankarnati18](https://huggingface.co/Charankarnati18)
+
 
