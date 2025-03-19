@@ -127,7 +127,6 @@ The fine-tuned model will be saved in the `/fine-tuned-model` directory.
 
 ### Evaluating the Model
 The evaluation script uses the following metrics:
-- **Perplexity Score** (for model coherence)
 - **Cosine Similarity** (for semantic closeness)
 
 The evaluation results are automatically printed after model training.
