@@ -43,9 +43,7 @@ The trained model will be saved in the `/content/saved_model` directory.
 ### Evaluating the Model
 The evaluation script computes:
 - Accuracy
-- AUC-ROC (One-vs-Rest)
-- Confusion Matrix
-- False Positive/Negative Rate
+
 
 The script automatically evaluates the model after training.
 
@@ -129,8 +127,6 @@ The fine-tuned model will be saved in the `/fine-tuned-model` directory.
 
 ### Evaluating the Model
 The evaluation script uses the following metrics:
-- **BLEU Score** (for text accuracy)
-- **ROUGE Score** (for summarization quality)
 - **Perplexity Score** (for model coherence)
 - **Cosine Similarity** (for semantic closeness)
 
@@ -221,12 +217,7 @@ python task4_final.py
 ```
 The fine-tuned model will be saved in the `/misogyny_model` directory.
 
-### Evaluating the Model
-The evaluation script uses the following metrics:
-- **Accuracy** (for overall performance)
-- **Confusion Matrix** (for class-wise performance)
-- **Perplexity Score** (for model coherence)
-- **Harmful Intent Detection Accuracy**
+
 
 The evaluation results are automatically printed after model training.
 
@@ -319,7 +310,6 @@ The evaluation script uses the following metrics:
 
 - **Accuracy** (for overall performance)
 - **Precision, Recall, and F1-Score** (for detailed performance)
-- **Confusion Matrix** (for class-wise performance)
 
 The evaluation results are automatically printed after model training.
 
